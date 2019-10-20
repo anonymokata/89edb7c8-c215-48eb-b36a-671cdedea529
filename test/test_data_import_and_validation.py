@@ -36,6 +36,9 @@ class TestDataImportAndValidation(unittest.TestCase):
     def test005_when_missing_csv_is_opened_error_is_raised(self):
         method = 'test20_when_missing_csv_is_opened_error_is_raised'
         csv_file = CSV_MISSING
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
 
         try:
             self.log.info(
@@ -52,9 +55,17 @@ class TestDataImportAndValidation(unittest.TestCase):
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
             )
 
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
     def test010_when_empty_csv_is_read_error_is_raised(self):
         method = 'test10_when_empty_csv_is_read_error_is_raised'
         csv_file = CSV_EMPTY
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
 
         try:
             self.log.info(
@@ -70,6 +81,10 @@ class TestDataImportAndValidation(unittest.TestCase):
             self.log.info(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
             )
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
 
 
 if __name__ == '__main__':
