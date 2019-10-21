@@ -315,6 +315,55 @@ class TestDataImportAndValidation(unittest.TestCase):
         )
         return
 
+    def test037_when_grid_is_not_square_error_is_raised(self):
+        method = 'test037_when_grid_is_not_square_error_is_raised'
+        csv_file = CSV_ABC_BAD_GRID_GOOD_WORDS
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        try:
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+            )
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting GridDimensionException")
+            )
+            repo = WordSearchRepository(csv_file=csv_file)
+
+            for r in repo.get_word_search().get_grid():
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Row {r}")
+                )
+            msg = f"GridDimensionException should have been triggered"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            self.fail(msg)
+
+        except FileFormatException as ffe:
+            msg = f"Received Exception of [{ffe}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            self.fail(msg)
+        except WordLengthException as wle:
+            msg = f"Received Exception of [{wle}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            self.fail(msg)
+        except GridDimensionException as gde:
+            msg = f"Received Exception of [{gde}] for {csv_file}"
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
 
 if __name__ == '__main__':
     unittest.main()

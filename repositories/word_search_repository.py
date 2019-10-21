@@ -87,7 +87,20 @@ class WordSearchRepository(object):
     def __check_grid_size(self):
         method = "__check_grid_size"
         if len(self.get_word_search().get_grid()) > 0:
-            pass
+            dimension_dict = self.get_word_search().get_grid_dimension()
+            row = dimension_dict[WordSearchModel.CONST_ROW]
+            col = dimension_dict[WordSearchModel.CONST_COL]
+            if row != col:
+                msg = f"raising GridDimensionException since GRID is not square. It is {row}x{col}"
+                self.log.error(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                )
+                raise GridDimensionException(msg)
+            else:
+                msg = f"GRID is square at {row}x{col}"
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                )
         else:
             msg = f"raising GridDimensionException since grid is missing"
             self.log.error(
@@ -95,6 +108,7 @@ class WordSearchRepository(object):
             )
             raise GridDimensionException(msg)
         return
+
 
 #
 # end of script

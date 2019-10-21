@@ -1,4 +1,7 @@
 class WordSearchModel(object):
+    CONST_ROW = "ROW"
+    CONST_COL = "COL"
+
     def __init__(self, raw_word_search_rows=None):
         if raw_word_search_rows:
             self.__raw_rows = raw_word_search_rows
@@ -15,6 +18,15 @@ class WordSearchModel(object):
 
     def get_grid(self):
         return self.__grid
+
+    def get_grid_dimension(self):
+        dimensions_dict = dict()
+        grid = self.get_grid()
+
+        dimensions_dict[WordSearchModel.CONST_ROW] = len(grid)
+        dimensions_dict[WordSearchModel.CONST_COL] = len(grid[0])
+
+        return dimensions_dict
 
     def __extract_raw_word_list(self):
         if len(self.__raw_rows) > 0:
