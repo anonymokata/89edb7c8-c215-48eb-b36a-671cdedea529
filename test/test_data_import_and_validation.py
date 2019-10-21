@@ -14,6 +14,7 @@ __author__ = 'Ken Langer'
 CSV_EMPTY = 'data/test/empty.csv'
 CSV_MISSING = 'data/test/bogus_missing_file.csv'
 CSV_ABC_GOOD_GRID_BAD_WORDS = 'data/test/abc_good_grid_bad_words.csv'
+CSV_ABC_BAD_GRID_GOOD_WORDS = 'data/test/abc_bad_grid_good_words.csv'
 
 #
 # GOOD CSV files
@@ -183,6 +184,41 @@ class TestDataImportAndValidation(unittest.TestCase):
         except WordLengthException as wle:
             msg = f"Received Exception of [{wle}] for {csv_file}"
             self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test030_when_good_csv_is_read_a_grid_is_found(self):
+        method = 'test030_when_good_csv_is_read_a_grid_is_found'
+        csv_file = CSV_ABC_GOOD_GRID_GOOD_WORDS
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        try:
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+            )
+            repo = WordSearchRepository(csv_file=csv_file)
+
+            for r in repo.get_word_search().get_grid():
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Row {r}")
+                )
+
+        except FileFormatException as ffe:
+            msg = f"Received Exception of [{ffe}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+
+        except WordLengthException as wle:
+            msg = f"Received Exception of [{wle}] for {csv_file}"
+            self.log.error(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
             )
 
