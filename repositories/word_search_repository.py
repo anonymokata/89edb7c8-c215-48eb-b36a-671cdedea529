@@ -1,4 +1,5 @@
 from exceptions.file_format_exception import FileFormatException
+from exceptions.grid_dimension_exception import GridDimensionException
 from exceptions.word_length_exception import WordLengthException
 from models.word_search_model import WordSearchModel
 import helpers.log_helper as logger_helper
@@ -22,6 +23,7 @@ class WordSearchRepository(object):
         self.__check_csv_length()
         self.__word_search_model = WordSearchModel(raw_word_search_rows=self.__csv_data)
         self.__check_word_length()
+        self.__check_grid_size()
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed")
@@ -80,6 +82,18 @@ class WordSearchRepository(object):
                 self.log.debug(
                     logger_helper.format_log(classname=self.classname, method=method, msg=msg)
                 )
+        return
+
+    def __check_grid_size(self):
+        method = "__check_grid_size"
+        if len(self.get_word_search().get_grid()) > 0:
+            pass
+        else:
+            msg = f"raising GridDimensionException since grid is missing"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            raise GridDimensionException(msg)
         return
 
 #
