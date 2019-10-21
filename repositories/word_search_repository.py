@@ -1,4 +1,6 @@
 from exceptions.file_format_exception import FileFormatException
+from exceptions.word_length_exception import WordLengthException
+from models.word_search_model import WordSearchModel
 import helpers.log_helper as logger_helper
 import etc.config as config
 
@@ -18,11 +20,16 @@ class WordSearchRepository(object):
         self.__csv_file = csv_file
         self.__csv_data = self.__read_csv_file()
         self.__check_csv_length()
+        self.__word_search_model = WordSearchModel(raw_word_search_rows=self.__csv_data)
+        self.__check_word_length()
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed")
         )
         return
+
+    def get_word_search(self):
+        return self.__word_search_model
 
     def __read_csv_file(self):
         method = "__read_csv_file"
@@ -57,6 +64,22 @@ class WordSearchRepository(object):
             self.log.debug(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
             )
+        return
+
+    def __check_word_length(self):
+        method = "__check_word_length"
+        for w in self.get_word_search().get_word_list():
+            if len(w) < config.MIN_WORD_LENGTH:
+                msg = f"raising WordLengthException - {w} is {len(w)} which FAILS minimum of {config.MIN_WORD_LENGTH}"
+                self.log.error(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                )
+                raise WordLengthException(msg)
+            else:
+                msg = f"{w} is {len(w)} which passes minimum of {config.MIN_WORD_LENGTH}"
+                self.log.debug(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                )
         return
 
 #

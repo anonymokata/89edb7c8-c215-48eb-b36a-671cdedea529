@@ -15,5 +15,10 @@ LOG_FILE = os.path.join("logs", "word_search_kata.log")
 FILE_ENCODING = "utf-8"
 
 #
+# word search constants
+#
+MIN_WORD_LENGTH = 2
+
+#
 # end of file
 #

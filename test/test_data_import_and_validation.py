@@ -1,6 +1,7 @@
 import unittest
 from repositories.word_search_repository import WordSearchRepository
 from exceptions.file_format_exception import FileFormatException
+from exceptions.word_length_exception import WordLengthException
 import helpers.log_helper as logger_helper
 import etc.config as config
 
@@ -12,6 +13,7 @@ __author__ = 'Ken Langer'
 #
 CSV_EMPTY = 'data/test/empty.csv'
 CSV_MISSING = 'data/test/bogus_missing_file.csv'
+CSV_ABC_GOOD_GRID_BAD_WORDS = 'data/test/abc_good_grid_bad_words.csv'
 
 #
 # GOOD CSV files
@@ -25,9 +27,13 @@ class TestDataImportAndValidation(unittest.TestCase):
         self.classname = "TestDataImportAndValidation"
         self.log = logger_helper.get_logger(config.LOG_FILE)
 
+        msg = f"Started {config.CONST_APP_NAME} {config.CONST_APP_VERSION}"
         self.log.debug(
-            logger_helper.format_log(classname=self.classname, method=method, msg="Started")
+            logger_helper.format_log(classname=self.classname, method=method, msg=msg)
         )
+
+        # Setup steps go here
+
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed")
         )
@@ -42,6 +48,9 @@ class TestDataImportAndValidation(unittest.TestCase):
 
         try:
             self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+            )
+            self.log.info(
                 logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileNotFoundException")
             )
             repo = WordSearchRepository(csv_file=csv_file)
@@ -49,8 +58,15 @@ class TestDataImportAndValidation(unittest.TestCase):
             self.log.error(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
             )
-        except FileNotFoundError as ffe:
-            msg = f"Received expected [{ffe}] for {csv_file}"
+            self.fail(msg)
+
+        except FileNotFoundError as fnfe:
+            msg = f"Received expected [{fnfe}] for {csv_file}"
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+        except WordLengthException as wle:
+            msg = f"Received Exception of [{wle}] for {csv_file}"
             self.log.info(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
             )
@@ -63,11 +79,15 @@ class TestDataImportAndValidation(unittest.TestCase):
     def test010_when_empty_csv_is_read_error_is_raised(self):
         method = 'test10_when_empty_csv_is_read_error_is_raised'
         csv_file = CSV_EMPTY
+
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
         try:
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+            )
             self.log.info(
                 logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileFormatException")
             )
@@ -76,11 +96,96 @@ class TestDataImportAndValidation(unittest.TestCase):
             self.log.error(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
             )
+            self.fail(msg)
+
         except FileFormatException as ffe:
             msg = f"Received expected [{ffe}] for {csv_file}"
             self.log.info(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
             )
+        except WordLengthException as wle:
+            msg = f"Received Exception of [{wle}] for {csv_file}"
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test020_when_good_csv_is_read_a_word_list_is_found(self):
+        method = 'test020_when_good_csv_is_read_a_word_list_is_found'
+        csv_file = CSV_ABC_GOOD_GRID_GOOD_WORDS
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        try:
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+            )
+            repo = WordSearchRepository(csv_file=csv_file)
+
+            for w in repo.get_word_search().get_word_list():
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Word {w}")
+                )
+
+        except FileFormatException as ffe:
+            msg = f"Received Exception of [{ffe}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+
+        except WordLengthException as wle:
+            msg = f"Received Exception of [{wle}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test025_when_word_list_is_short_error_is_raised(self):
+        method = 'test025_when_word_list_is_short_error_is_raised'
+        csv_file = CSV_ABC_GOOD_GRID_BAD_WORDS
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        try:
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+            )
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting WordLengthException")
+            )
+            repo = WordSearchRepository(csv_file=csv_file)
+
+            for w in repo.get_word_search().get_word_list():
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Word {w}")
+                )
+            msg = f"WordLengthException should have been triggered"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            self.fail(msg)
+
+        except FileFormatException as ffe:
+            msg = f"Received Exception of [{ffe}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+        except WordLengthException as wle:
+            msg = f"Received Exception of [{wle}] for {csv_file}"
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
@@ -89,3 +194,7 @@ class TestDataImportAndValidation(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+#
+# end of script
+#
