@@ -14,7 +14,8 @@ __author__ = 'Ken Langer'
 #
 # GOOD CSV files
 #
-CSV_ABC_GOOD_GRID_GOOD_WORDS = 'data/test/abc_grid_horiz_words.csv'
+CSV_ABC_GRID_HORIZ_WORDS = 'data/test/abc_grid_horiz_words.csv'
+CSV_ABC_GRID_VERT_WORDS = 'data/test/abc_grid_vert_words.csv'
 
 
 class TestGridWordSearch(unittest.TestCase):
@@ -38,7 +39,7 @@ class TestGridWordSearch(unittest.TestCase):
 
     def test105_when_horiz_word_is_in_grid_char_coordinates_are_returned(self):
         method = 'test105_when_horiz_word_is_in_grid_char_coordinates_are_returned'
-        csv_file = CSV_ABC_GOOD_GRID_GOOD_WORDS
+        csv_file = CSV_ABC_GRID_HORIZ_WORDS
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
@@ -79,7 +80,82 @@ class TestGridWordSearch(unittest.TestCase):
                 )
                 self.fail(msg)
             else:
-                pass
+                msg = f"{len(repo.get_word_search().get_word_list())} were found in {csv_file}."
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                )
+
+        except FileFormatException as ffe:
+            msg = f"Received Exception of [{ffe}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            self.fail(msg)
+        except WordLengthException as wle:
+            msg = f"Received Exception of [{wle}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            self.fail(msg)
+        except GridDimensionException as gde:
+            msg = f"Received Exception of [{gde}] for {csv_file}"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            self.fail(msg)
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test110_when_vert_word_is_in_grid_char_coordinates_are_returned(self):
+        method = 'test110_when_vert_word_is_in_grid_char_coordinates_are_returned'
+        csv_file = CSV_ABC_GRID_VERT_WORDS
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        try:
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+            )
+            repo = WordSearchRepository(csv_file=csv_file)
+            controller = WordSearchController(grid=repo.get_word_search().get_grid())
+
+            not_found_count = len(repo.get_word_search().get_word_list())
+            for w in repo.get_word_search().get_word_list():
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Searching for {w}")
+                )
+                coord_list = controller.find_word(word_as_chars=w)
+                if len(coord_list) > 0:
+                    not_found_count -= 1
+                    self.log.info(
+                        logger_helper.format_log(classname=self.classname, method=method, msg=f"{w} FOUND")
+                    )
+                    c_string = ""
+                    for c in coord_list:
+                        c_string += f"{str(c)} "
+                    self.log.info(
+                        logger_helper.format_log(classname=self.classname, method=method, msg=f"{c_string} FOUND")
+                    )
+                else:
+                    self.log.warning(
+                        logger_helper.format_log(classname=self.classname, method=method, msg=f"{w} NOT FOUND")
+                    )
+
+            if not_found_count > 0:
+                msg = f"{not_found_count} of {len(repo.get_word_search().get_word_list())} words not found in {csv_file}."
+                self.log.error(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                )
+                self.fail(msg)
+            else:
+                msg = f"{len(repo.get_word_search().get_word_list())} were found in {csv_file}."
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                )
 
         except FileFormatException as ffe:
             msg = f"Received Exception of [{ffe}] for {csv_file}"

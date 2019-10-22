@@ -33,7 +33,13 @@ class WordSearchController(object):
             logger_helper.format_log(classname=self.classname, method=method,
                                      msg=f"Searching for {str(word_as_chars)}")
         )
+
         coord_list = self.__search_horizontal(word_as_chars=word_as_chars)
+        if len(coord_list) < 1:
+            coord_list = self.__search_vertical(word_as_chars=word_as_chars)
+        else:
+            pass
+
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method,
                                      msg=f"Found {len(coord_list)} chars")
@@ -97,14 +103,72 @@ class WordSearchController(object):
             )
             return list()
 
+    def __search_vertical(self, word_as_chars=None):
+        method = "__search_vertical"
+        match_char_list = None
+        char_list = list()
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method,
+                                     msg=f"Starting VERT Search {str(word_as_chars)}")
+        )
+
+        row_len = len(self.__grid)
+        if row_len > 0:
+            col_len = len(self.__grid[0])
+        else:
+            col_len = 0
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method,
+                                     msg=f"row_len={row_len} x col_len={col_len}")
+        )
+
+        for col_pos in range(0, col_len):
+            char_list.clear()
+
+            for row_pos in range(0, row_len):
+                c = col_pos
+                r = row_pos
+                if r in range(0, row_len) and c in range(0, col_len):
+                    coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                    char_list.append(coordinate)
+                else:
+                    coordinate = CharCoordinateModel("#", row=r, col=c)
+                    self.log.warning(
+                        logger_helper.format_log(classname=self.classname, method=method,
+                                                 msg=f"{str(coordinate)} is out of bounds. Breaking out.")
+                    )
+                    break
+
+            match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
+
+            if len(match_char_list) > 0:
+                break
+            else:
+                pass
+
+        if match_char_list:
+            self.log.debug(
+                logger_helper.format_log(classname=self.classname, method=method,
+                                         msg=f"RETURNING {len(match_char_list)} matching characters")
+            )
+            return match_char_list
+        else:
+            self.log.debug(
+                logger_helper.format_log(classname=self.classname, method=method,
+                                         msg=f"RETURNING 0 matching characters")
+            )
+            return list()
+
     def __find_in_char_list(self, word_as_chars=None, char_list_from_grid=None):
         method = "__find_in_char_list"
         match_char_list = list()
         found_count = 0
 
+        char_list_from_grid_as_string = self.__char_list_from_grid_to_string(char_list_from_grid=char_list_from_grid)
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method,
-                                     msg=f"Search for {str(word_as_chars)} in char_list_from_grid")
+                                     msg=f"Search for {str(word_as_chars)} in {char_list_from_grid_as_string}")
         )
 
         if len(word_as_chars) <= len(char_list_from_grid):
@@ -142,6 +206,13 @@ class WordSearchController(object):
                                          msg=f"RETURNING 0 matching characters")
             )
             return list()
+
+    @staticmethod
+    def __char_list_from_grid_to_string(char_list_from_grid=None):
+        s = ""
+        for coord in char_list_from_grid:
+            s += f"{str(coord)} "
+        return s.strip()
 
 #
 # end of script
