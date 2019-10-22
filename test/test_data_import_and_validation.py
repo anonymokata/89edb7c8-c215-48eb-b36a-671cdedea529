@@ -31,15 +31,16 @@ class TestDataImportAndValidation(unittest.TestCase):
         self.classname = "TestDataImportAndValidation"
         self.log = logger_helper.get_logger(config.LOG_FILE)
 
-        msg = f"Started {config.CONST_APP_NAME} {config.CONST_APP_VERSION}"
+        msg = f"SetUp for {config.CONST_APP_NAME} {config.CONST_APP_VERSION}"
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg=msg)
         )
+        return
 
-        # Setup steps go here
-
+    def tearDown(self):
+        method = "tearDown"
         self.log.debug(
-            logger_helper.format_log(classname=self.classname, method=method, msg="Completed")
+            logger_helper.format_log(classname=self.classname, method=method, msg="TearDown Completed")
         )
         return
 
