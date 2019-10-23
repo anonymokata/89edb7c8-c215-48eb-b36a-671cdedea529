@@ -26,11 +26,14 @@ CSV_ABC_GOOD_GRID_GOOD_WORDS = 'data/test/abc_good_grid_good_words.csv'
 
 
 class TestDataImportAndValidation(unittest.TestCase):
-    def setUp(self):
-        method = "setUp"
+    def __init__(self, *args, **kwargs):
+        super(TestDataImportAndValidation, self).__init__(*args, **kwargs)
         self.classname = "TestDataImportAndValidation"
         self.log = logger_helper.get_logger(config.LOG_FILE)
+        return
 
+    def setUp(self):
+        method = "setUp"
         msg = f"SetUp for {config.CONST_APP_NAME} {config.CONST_APP_VERSION}"
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg=msg)
