@@ -14,8 +14,9 @@ __author__ = 'Ken Langer'
 #
 # GOOD CSV files
 #
-CSV_ABC_GRID_HORIZ_WORDS = 'data/test/abc_grid_horiz_words.csv'
-CSV_ABC_GRID_VERT_WORDS = 'data/test/abc_grid_vert_words.csv'
+CSV_ABC_GRID_HORIZ_WORDS = 'data/test/abc_good_grid_horiz_words.csv'
+CSV_ABC_GRID_VERT_WORDS = 'data/test/abc_good_grid_vert_words.csv'
+CSV_ABC_GRID_HORIZ_REVERSE_WORDS = 'data/test/abc_good_grid_horiz_reverse_words.csv'
 
 
 class TestGridWordSearch(unittest.TestCase):
@@ -51,8 +52,8 @@ class TestGridWordSearch(unittest.TestCase):
         )
         return
 
-    def test110_when_vert_word_is_in_grid_char_coordinates_are_returned(self):
-        method = 'test110_when_vert_word_is_in_grid_char_coordinates_are_returned'
+    def test120_when_vert_word_is_in_grid_char_coordinates_are_returned(self):
+        method = 'test120_when_vert_word_is_in_grid_char_coordinates_are_returned'
         csv_file = CSV_ABC_GRID_VERT_WORDS
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
