@@ -38,7 +38,7 @@ class WordSearchController(object):
         if len(coord_list) < 1:
             coord_list = self.__search_vertical(word_as_chars=word_as_chars)
             if len(coord_list) < 1:
-                coord_list = self.__search_horziontal_reverse(word_as_chars=word_as_chars)
+                coord_list = self.__search_horizontal_reverse(word_as_chars=word_as_chars)
                 if len(coord_list) < 1:
                     coord_list = self.__search_vertical_reverse(word_as_chars=word_as_chars)
                 else:
@@ -111,8 +111,8 @@ class WordSearchController(object):
             )
             return list()
 
-    def __search_horziontal_reverse(self, word_as_chars=None):
-        method = "__search_horziontal_reverse"
+    def __search_horizontal_reverse(self, word_as_chars=None):
+        method = "__search_horizontal_reverse"
         word_as_chars_reverse = list()
         word_as_chars_reverse.extend(word_as_chars)
         word_as_chars_reverse.reverse()

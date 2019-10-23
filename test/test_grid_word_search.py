@@ -10,7 +10,6 @@ import etc.config as config
 
 __author__ = 'Ken Langer'
 
-
 #
 # GOOD CSV files
 #
@@ -48,9 +47,7 @@ class TestGridWordSearch(unittest.TestCase):
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
-
         self.__main_test_executor(csv_file=csv_file)
-
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
@@ -62,9 +59,7 @@ class TestGridWordSearch(unittest.TestCase):
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
-
         self.__main_test_executor(csv_file=csv_file)
-
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
@@ -76,9 +71,7 @@ class TestGridWordSearch(unittest.TestCase):
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
-
         self.__main_test_executor(csv_file=csv_file)
-
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
@@ -90,14 +83,11 @@ class TestGridWordSearch(unittest.TestCase):
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
-
         self.__main_test_executor(csv_file=csv_file)
-
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
-
 
     def __main_test_executor(self, csv_file=None):
         method = '__main_test_executor'
