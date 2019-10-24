@@ -43,6 +43,10 @@ class WordSearchController(object):
                     coord_list = self.__search_vertical_reverse(word_as_chars=word_as_chars)
                     if len(coord_list) < 1:
                         coord_list = self.__search_diagonal_ascending(word_as_chars=word_as_chars)
+                        if len(coord_list) < 1:
+                            coord_list = self.__search_diagonal_ascending_reverse(word_as_chars=word_as_chars)
+                        else:
+                            pass
                     else:
                         pass
                 else:
@@ -299,6 +303,32 @@ class WordSearchController(object):
                                          msg=f"RETURNING 0 matching characters")
             )
             return list()
+
+    def __search_diagonal_ascending_reverse(self, word_as_chars=None):
+        method = "__search_diagonal_ascending_reverse"
+        word_as_chars_reverse = list()
+        word_as_chars_reverse.extend(word_as_chars)
+        word_as_chars_reverse.reverse()
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method,
+                                     msg=f"Original VERT Search {str(word_as_chars)}")
+        )
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method,
+                                     msg=f"Starting REVERSE DIAGONAL ASCENDING Search {str(word_as_chars_reverse)}")
+        )
+        tmp_coord_list = self.__search_diagonal_ascending(word_as_chars=word_as_chars_reverse)
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method,
+                                     msg=f"RETURNING {len(tmp_coord_list)} matching characters")
+        )
+
+        coord_list = list()
+        coord_list.extend(tmp_coord_list)
+        coord_list.reverse()
+
+        return coord_list
 
     def __find_in_char_list(self, word_as_chars=None, char_list_from_grid=None):
         method = "__find_in_char_list"
