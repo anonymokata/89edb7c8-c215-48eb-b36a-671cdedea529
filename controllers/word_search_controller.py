@@ -45,6 +45,10 @@ class WordSearchController(object):
                         coord_list = self.__search_diagonal_ascending(word_as_chars=word_as_chars)
                         if len(coord_list) < 1:
                             coord_list = self.__search_diagonal_ascending_reverse(word_as_chars=word_as_chars)
+                            if len(coord_list) < 1:
+                                coord_list = self.__search_diagonal_descending(word_as_chars=word_as_chars)
+                            else:
+                                pass
                         else:
                             pass
                     else:
@@ -329,6 +333,83 @@ class WordSearchController(object):
         coord_list.reverse()
 
         return coord_list
+
+    def __search_diagonal_descending(self, word_as_chars=None):
+        method = "__search_diagonal_descending"
+        match_char_list = None
+        char_list = list()
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method,
+                                     msg=f"Starting DIAG DESC Search {str(word_as_chars)}")
+        )
+        row_len = len(self.__grid)
+        if (row_len > 0):
+            col_len = len(self.__grid[0])
+        else:
+            col_len = 0
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method,
+                                     msg=f"row_len={row_len} by col_len={col_len}")
+        )
+        for col_pos in range(0, col_len):
+            char_list.clear()
+
+            for row_pos in range(0, (row_len - col_pos)):
+                r = (row_len - 1) - row_pos
+                c = col_pos + row_pos
+
+                if r in range(0, row_len) and c in range(0, col_len):
+                    coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                    char_list.append(coordinate)
+                else:
+                    coordinate = CharCoordinateModel("#", row=r, col=c)
+                    self.log.warning(
+                        logger_helper.format_log(classname=self.classname, method=method,
+                                                 msg=f"{str(coordinate)} is out of bounds. Breaking out.")
+                    )
+                    break
+            match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
+            if len(match_char_list) > 0:
+                break
+            else:
+                pass
+
+        if len(match_char_list) < 1:
+            for row_pos in range(1, row_len):
+                char_list.clear()
+
+                for col_pos in range(0, (col_len - row_pos)):
+                    c = col_pos
+                    r = (row_len - 1) - col_pos - row_pos
+                    if r in range(0, row_len) and c in range(0, col_len):
+                        coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                        char_list.append(coordinate)
+                    else:
+                        coordinate = CharCoordinateModel("#", row=r, col=c)
+                        self.log.warning(
+                            logger_helper.format_log(classname=self.classname, method=method,
+                                                     msg=f"{str(coordinate)} is out of bounds. Breaking out.")
+                        )
+                        break
+                match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
+                if len(match_char_list) > 0:
+                    break
+                else:
+                    pass
+
+        if match_char_list:
+            self.log.debug(
+                logger_helper.format_log(classname=self.classname, method=method,
+                                         msg=f"RETURNING {len(match_char_list)} matching characters")
+            )
+            return match_char_list
+        else:
+            self.log.debug(
+                logger_helper.format_log(classname=self.classname, method=method,
+                                         msg=f"RETURNING 0 matching characters")
+            )
+            return list()
 
     def __find_in_char_list(self, word_as_chars=None, char_list_from_grid=None):
         method = "__find_in_char_list"
