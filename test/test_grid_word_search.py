@@ -20,6 +20,7 @@ CSV_ABC_GRID_VERT_REVERSE_WORDS = 'data/test/abc_good_grid_vert_reverse_words.cs
 CSV_ABC_GRID_DIAG_ASC_WORDS = 'data/test/abc_good_grid_diag_asc_words.csv'
 CSV_ABC_GRID_DIAG_ASC_REVERSE_WORDS = 'data/test/abc_good_grid_diag_asc_reverse_words.csv'
 CSV_ABC_GRID_DIAG_DESC_WORDS = 'data/test/abc_good_grid_diag_desc_words.csv'
+CSV_ABC_GRID_DIAG_DESC_REVERSE_WORDS = 'data/test/abc_good_grid_diag_desc_reverse_words.csv'
 
 
 class TestGridWordSearch(unittest.TestCase):
@@ -119,6 +120,18 @@ class TestGridWordSearch(unittest.TestCase):
     def test140_when_diag_desc_word_is_in_grid_char_coordinates_are_returned(self):
         method = 'test140_when_diag_desc_word_is_in_grid_char_coordinates_are_returned'
         csv_file = CSV_ABC_GRID_DIAG_DESC_WORDS
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+        self.__main_test_executor(csv_file=csv_file)
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test145_when_reverse_diag_desc_word_is_in_grid_char_coordinates_are_returned(self):
+        method = 'test145_when_reverse_diag_desc_word_is_in_grid_char_coordinates_are_returned'
+        csv_file = CSV_ABC_GRID_DIAG_DESC_REVERSE_WORDS
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
