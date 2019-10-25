@@ -9,7 +9,6 @@ import etc.config as config
 
 __author__ = 'Ken Langer'
 
-
 #
 # ERROR Triggering CSV files
 #
@@ -61,7 +60,7 @@ class TestDataImportAndValidation(unittest.TestCase):
             self.log.info(
                 logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileNotFoundException")
             )
-            repo = WordSearchRepository(csv_file=csv_file)
+            _ = WordSearchRepository(csv_file=csv_file)
             msg = f"FileNotFoundError should have been triggered"
             self.log.error(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
@@ -106,7 +105,7 @@ class TestDataImportAndValidation(unittest.TestCase):
             self.log.info(
                 logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileFormatException")
             )
-            repo = WordSearchRepository(csv_file=csv_file)
+            _ = WordSearchRepository(csv_file=csv_file)
             msg = f"FileFormatException should have been triggered"
             self.log.error(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
@@ -282,7 +281,7 @@ class TestDataImportAndValidation(unittest.TestCase):
                 logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
             )
             self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting GridDimensionException")
+                logger_helper.format_log(classname=self.classname, method=method, msg="GridDimensionException Expected")
             )
             repo = WordSearchRepository(csv_file=csv_file)
 
@@ -331,7 +330,7 @@ class TestDataImportAndValidation(unittest.TestCase):
                 logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
             )
             self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting GridDimensionException")
+                logger_helper.format_log(classname=self.classname, method=method, msg="GridDimensionException Expected")
             )
             repo = WordSearchRepository(csv_file=csv_file)
 
