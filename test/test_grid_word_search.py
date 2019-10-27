@@ -52,26 +52,16 @@ class TestGridWordSearch(unittest.TestCase):
 
     def test000_when_controller_is_not_passed_a_grid_error_is_raised(self):
         method = "test000_when_controller_is_not_passed_a_grid_error_is_raised"
-        try:
-            self.log.debug(
-                logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
-            )
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting ValueError")
-            )
 
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Expecting ValueError")
+        )
+
+        with self.assertRaises(ValueError, msg=f"ValueError should have been triggered"):
             _ = WordSearchController(grid=None)
-
-            msg = f"ValueError should have been triggered"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except ValueError as ve:
-            msg = f"Received expected [{ve}]"
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
@@ -189,70 +179,41 @@ class TestGridWordSearch(unittest.TestCase):
     def __main_test_executor(self, csv_file=None, not_found_ok=False):
         method = '__main_test_executor'
 
-        try:
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+        )
+        repo = WordSearchRepository(csv_file=csv_file)
+        controller = WordSearchController(grid=repo.get_word_search().get_grid())
+
+        not_found_count = len(repo.get_word_search().get_word_list())
+        for w in repo.get_word_search().get_word_list():
             self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Searching for {w}")
             )
-            repo = WordSearchRepository(csv_file=csv_file)
-            controller = WordSearchController(grid=repo.get_word_search().get_grid())
-
-            not_found_count = len(repo.get_word_search().get_word_list())
-            for w in repo.get_word_search().get_word_list():
+            coord_list = controller.find_word(word_as_chars=w)
+            if len(coord_list) > 0:
+                not_found_count -= 1
                 self.log.info(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Searching for {w}")
+                    logger_helper.format_log(classname=self.classname, method=method, msg=f"{w} FOUND")
                 )
-                coord_list = controller.find_word(word_as_chars=w)
-                if len(coord_list) > 0:
-                    not_found_count -= 1
-                    self.log.info(
-                        logger_helper.format_log(classname=self.classname, method=method, msg=f"{w} FOUND")
-                    )
-                    c_string = ""
-                    for c in coord_list:
-                        c_string += f"{str(c)} "
-                    self.log.info(
-                        logger_helper.format_log(classname=self.classname, method=method, msg=f"{c_string} FOUND")
-                    )
-                else:
-                    self.log.warning(
-                        logger_helper.format_log(classname=self.classname, method=method, msg=f"{w} NOT FOUND")
-                    )
-
-            if not_found_count > 0 and not not_found_ok:
-                msg = f"{not_found_count} of {len(repo.get_word_search().get_word_list())} words notfound in {csv_file}"
-                self.log.error(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-                )
-                self.fail(msg)
-            elif not_found_count > 0:
-                msg = f"{not_found_count} of {len(repo.get_word_search().get_word_list())} words notfound in {csv_file}"
+                c_string = ""
+                for c in coord_list:
+                    c_string += f"{str(c)} "
                 self.log.info(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                    logger_helper.format_log(classname=self.classname, method=method, msg=f"{c_string} FOUND")
                 )
             else:
-                msg = f"All {len(repo.get_word_search().get_word_list())} words were found in {csv_file}."
-                self.log.info(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                self.log.warning(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=f"{w} NOT FOUND")
                 )
 
-        except FileFormatException as ffe:
-            msg = f"Received Exception of [{ffe}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except WordLengthException as wle:
-            msg = f"Received Exception of [{wle}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except GridDimensionException as gde:
-            msg = f"Received Exception of [{gde}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
+        self.assertFalse(
+            not_found_count > 0 and not_found_ok is False,
+            msg = f"{not_found_count} of {len(repo.get_word_search().get_word_list())} words notfound in {csv_file}")
+        self.assertFalse(
+            not_found_count < 1 and not_found_ok is True,
+            msg = f"{not_found_count} of {len(repo.get_word_search().get_word_list())} words notfound when some were expected in {csv_file}")
+
         return
 
 #
