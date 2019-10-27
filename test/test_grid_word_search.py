@@ -22,6 +22,11 @@ CSV_ABC_GRID_DIAG_ASC_REVERSE_WORDS = 'data/test/abc_good_grid_diag_asc_reverse_
 CSV_ABC_GRID_DIAG_DESC_WORDS = 'data/test/abc_good_grid_diag_desc_words.csv'
 CSV_ABC_GRID_DIAG_DESC_REVERSE_WORDS = 'data/test/abc_good_grid_diag_desc_reverse_words.csv'
 
+#
+# GOOD CSV with NotFound Data
+#
+CSV_ABC_GRID_NOTFOUND_WORDS = 'data/test/abc_good_grid_notfound_words.csv'
+
 
 class TestGridWordSearch(unittest.TestCase):
     def __init__(self, *args, **kwargs):
@@ -169,7 +174,19 @@ class TestGridWordSearch(unittest.TestCase):
         )
         return
 
-    def __main_test_executor(self, csv_file=None):
+    def test150_when_words_are_notfound(self):
+        method = 'test150_when_words_are_notfound_'
+        csv_file = CSV_ABC_GRID_NOTFOUND_WORDS
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+        self.__main_test_executor(csv_file=csv_file, not_found_ok=True)
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def __main_test_executor(self, csv_file=None, not_found_ok=False):
         method = '__main_test_executor'
 
         try:
@@ -201,12 +218,17 @@ class TestGridWordSearch(unittest.TestCase):
                         logger_helper.format_log(classname=self.classname, method=method, msg=f"{w} NOT FOUND")
                     )
 
-            if not_found_count > 0:
+            if not_found_count > 0 and not not_found_ok:
                 msg = f"{not_found_count} of {len(repo.get_word_search().get_word_list())} words notfound in {csv_file}"
                 self.log.error(
                     logger_helper.format_log(classname=self.classname, method=method, msg=msg)
                 )
                 self.fail(msg)
+            elif not_found_count > 0:
+                msg = f"{not_found_count} of {len(repo.get_word_search().get_word_list())} words notfound in {csv_file}"
+                self.log.info(
+                    logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+                )
             else:
                 msg = f"All {len(repo.get_word_search().get_word_list())} words were found in {csv_file}."
                 self.log.info(
