@@ -1,3 +1,4 @@
+import os
 import logging
 import etc.config as config
 
@@ -14,6 +15,10 @@ def get_logger(filename=None):
     if _LOGGER:
         pass
     else:
+        directory = os.path.dirname(filename)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
         log_fh = open(filename, "w", encoding=config.FILE_ENCODING)
         logging.basicConfig(
             level=logging.DEBUG,
