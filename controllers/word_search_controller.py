@@ -377,12 +377,15 @@ class WordSearchController(object):
                     else:
                         match_char_list.clear()
                         found_count = 0
+                        break
+
                     col_pos += 1
                     if col_pos >= len(char_list_from_grid):
                         break
 
                 if found_count == len(word_as_chars):
                     break
+
         else:
             self.log.warning(
                 logger_helper.format_log(classname=self.classname, method=method,
