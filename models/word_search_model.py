@@ -5,12 +5,13 @@ class WordSearchModel(object):
     def __init__(self, raw_word_search_rows=None):
         if raw_word_search_rows:
             self.__raw_rows = raw_word_search_rows
-            self.__raw_word_list = self.__extract_raw_word_list()
-            self.__raw_grid_rows = self.__extract_raw_grid_rows()
-            self.__grid = self.__build_grid()
-            self.__word_list = self.__build_word_list()
         else:
             self.__raw_rows = list()
+
+        self.__raw_word_list = self.__extract_raw_word_list()
+        self.__raw_grid_rows = self.__extract_raw_grid_rows()
+        self.__grid = self.__build_grid()
+        self.__word_list = self.__build_word_list()
         return
 
     def get_word_list(self):

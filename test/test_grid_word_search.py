@@ -45,6 +45,34 @@ class TestGridWordSearch(unittest.TestCase):
         )
         return
 
+    def test000_when_controller_is_not_passed_a_grid_error_is_raised(self):
+        method = "test000_when_controller_is_not_passed_a_grid_error_is_raised"
+        try:
+            self.log.debug(
+                logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+            )
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting ValueError")
+            )
+
+            _ = WordSearchController(grid=None)
+
+            msg = f"ValueError should have been triggered"
+            self.log.error(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+            self.fail(msg)
+        except ValueError as ve:
+            msg = f"Received expected [{ve}]"
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
+            )
+
+        self.log.debug(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
     def test105_when_horiz_word_is_in_grid_char_coordinates_are_returned(self):
         method = 'test105_when_horiz_word_is_in_grid_char_coordinates_are_returned'
         csv_file = CSV_ABC_GRID_HORIZ_WORDS
