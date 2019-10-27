@@ -53,37 +53,15 @@ class TestDataImportAndValidation(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
-        try:
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
-            )
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileNotFoundException")
-            )
-            _ = WordSearchRepository(csv_file=csv_file)
-            msg = f"FileNotFoundError should have been triggered"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+        )
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileNotFoundException")
+        )
 
-        except FileNotFoundError as fnfe:
-            msg = f"Received expected [{fnfe}] for {csv_file}"
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-        except WordLengthException as wle:
-            msg = f"Received Exception of [{wle}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except GridDimensionException as gde:
-            msg = f"Received Exception of [{gde}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
+        with self.assertRaises(FileNotFoundError, msg=f"FileNotFoundError should have been triggered"):
+            _ = WordSearchRepository(csv_file=csv_file)
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
@@ -98,37 +76,15 @@ class TestDataImportAndValidation(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
-        try:
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
-            )
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileFormatException")
-            )
-            _ = WordSearchRepository(csv_file=csv_file)
-            msg = f"FileFormatException should have been triggered"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+        )
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileFormatException")
+        )
 
-        except FileFormatException as ffe:
-            msg = f"Received expected [{ffe}] for {csv_file}"
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-        except WordLengthException as wle:
-            msg = f"Received Exception of [{wle}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except GridDimensionException as gde:
-            msg = f"Received Exception of [{gde}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
+        with self.assertRaises(FileFormatException, msg=f"FileFormatException should have been triggered"):
+            _ = WordSearchRepository(csv_file=csv_file)
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
@@ -142,36 +98,16 @@ class TestDataImportAndValidation(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
-        try:
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+        )
+        repo = WordSearchRepository(csv_file=csv_file)
+        self.assertGreater(len(repo.get_word_search().get_word_list()), 0, msg=f"Could not find words in {csv_file}")
+
+        for w in repo.get_word_search().get_word_list():
             self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Word {w}")
             )
-            repo = WordSearchRepository(csv_file=csv_file)
-
-            for w in repo.get_word_search().get_word_list():
-                self.log.info(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Word {w}")
-                )
-
-        except FileFormatException as ffe:
-            msg = f"Received Exception of [{ffe}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-
-        except WordLengthException as wle:
-            msg = f"Received Exception of [{wle}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except GridDimensionException as gde:
-            msg = f"Received Exception of [{gde}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
@@ -185,42 +121,15 @@ class TestDataImportAndValidation(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
-        try:
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
-            )
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg="Expecting WordLengthException")
-            )
-            repo = WordSearchRepository(csv_file=csv_file)
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+        )
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Expecting WordLengthException")
+        )
 
-            for w in repo.get_word_search().get_word_list():
-                self.log.info(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Word {w}")
-                )
-            msg = f"WordLengthException should have been triggered"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-
-        except FileFormatException as ffe:
-            msg = f"Received Exception of [{ffe}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except WordLengthException as wle:
-            msg = f"Received Exception of [{wle}] for {csv_file}"
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-        except GridDimensionException as gde:
-            msg = f"Received Exception of [{gde}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
+        with self.assertRaises(WordLengthException, msg=f"WordLengthException should have been triggered"):
+            _ = WordSearchRepository(csv_file=csv_file)
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
@@ -234,35 +143,15 @@ class TestDataImportAndValidation(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
-        try:
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+        )
+        repo = WordSearchRepository(csv_file=csv_file)
+
+        for r in repo.get_word_search().get_grid():
             self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"Row {r}")
             )
-            repo = WordSearchRepository(csv_file=csv_file)
-
-            for r in repo.get_word_search().get_grid():
-                self.log.info(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Row {r}")
-                )
-
-        except FileFormatException as ffe:
-            msg = f"Received Exception of [{ffe}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except WordLengthException as wle:
-            msg = f"Received Exception of [{wle}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except GridDimensionException as gde:
-            msg = f"Received Exception of [{gde}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
@@ -276,42 +165,15 @@ class TestDataImportAndValidation(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
-        try:
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
-            )
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg="GridDimensionException Expected")
-            )
-            repo = WordSearchRepository(csv_file=csv_file)
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+        )
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="GridDimensionException Expected")
+        )
 
-            for r in repo.get_word_search().get_grid():
-                self.log.info(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Row {r}")
-                )
-            msg = f"GridDimensionException should have been triggered"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-
-        except FileFormatException as ffe:
-            msg = f"Received Exception of [{ffe}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except WordLengthException as wle:
-            msg = f"Received Exception of [{wle}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except GridDimensionException as gde:
-            msg = f"Received Exception of [{gde}] for {csv_file}"
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
+        with self.assertRaises(GridDimensionException, msg=f"GridDimensionException should have been triggered"):
+            _ = WordSearchRepository(csv_file=csv_file)
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
@@ -325,42 +187,15 @@ class TestDataImportAndValidation(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
-        try:
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
-            )
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg="GridDimensionException Expected")
-            )
-            repo = WordSearchRepository(csv_file=csv_file)
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg=f"Using {csv_file}")
+        )
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="GridDimensionException Expected")
+        )
 
-            for r in repo.get_word_search().get_grid():
-                self.log.info(
-                    logger_helper.format_log(classname=self.classname, method=method, msg=f"Row {r}")
-                )
-            msg = f"GridDimensionException should have been triggered"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-
-        except FileFormatException as ffe:
-            msg = f"Received Exception of [{ffe}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except WordLengthException as wle:
-            msg = f"Received Exception of [{wle}] for {csv_file}"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            self.fail(msg)
-        except GridDimensionException as gde:
-            msg = f"Received Exception of [{gde}] for {csv_file}"
-            self.log.info(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
+        with self.assertRaises(GridDimensionException, msg=f"GridDimensionException should have been triggered"):
+            _ = WordSearchRepository(csv_file=csv_file)
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
