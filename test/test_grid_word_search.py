@@ -255,10 +255,6 @@ class TestGridWordSearch(unittest.TestCase):
             self.fail(msg)
         return
 
-
-if __name__ == '__main__':
-    unittest.main()
-
 #
 # end of script
 #
