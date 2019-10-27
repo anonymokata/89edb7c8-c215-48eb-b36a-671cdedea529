@@ -11,7 +11,7 @@ class TestModels(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(TestModels, self).__init__(*args, **kwargs)
         self.classname = "TestModels"
-        self.log = logger_helper.get_logger(config.LOG_FILE)
+        self.log = logger_helper.get_logger(config.TEST_LOG_FILE)
         return
 
     def setUp(self):

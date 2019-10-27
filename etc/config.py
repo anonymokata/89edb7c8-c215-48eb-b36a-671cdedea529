@@ -13,6 +13,7 @@ CONST_APP_VERSION = "19.10.00"
 FORMAT = '%(asctime)-15s: %(levelname)-7s - %(message)s'
 LOG_DIR = "logs"
 LOG_FILE = os.path.join(LOG_DIR, "word_search_kata.log")
+TEST_LOG_FILE = os.path.join(LOG_DIR, "test_word_search_kata.log")
 FILE_ENCODING = "utf-8"
 
 #
