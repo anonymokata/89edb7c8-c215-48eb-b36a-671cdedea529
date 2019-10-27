@@ -49,20 +49,6 @@ class WordSearchController(object):
                                 coord_list = self.__search_diagonal_descending(word_as_chars=word_as_chars)
                                 if len(coord_list) < 1:
                                     coord_list = self.__search_diagonal_descending_reverse(word_as_chars=word_as_chars)
-                                else:
-                                    pass
-                            else:
-                                pass
-                        else:
-                            pass
-                    else:
-                        pass
-                else:
-                    pass
-            else:
-                pass
-        else:
-            pass
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method,
@@ -80,10 +66,7 @@ class WordSearchController(object):
         )
 
         row_len = len(self.__grid)
-        if row_len > 0:
-            col_len = len(self.__grid[0])
-        else:
-            col_len = 0
+        col_len = len(self.__grid[0])
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method,
@@ -96,23 +79,12 @@ class WordSearchController(object):
             for col_pos in range(0, col_len):
                 c = col_pos
                 r = row_pos
-                if r in range(0, row_len) and c in range(0, col_len):
-                    coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
-                    char_list.append(coordinate)
-                else:
-                    coordinate = CharCoordinateModel("#", row=r, col=c)
-                    self.log.warning(
-                        logger_helper.format_log(classname=self.classname, method=method,
-                                                 msg=f"{str(coordinate)} is out of bounds. Breaking out.")
-                    )
-                    break
+                coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                char_list.append(coordinate)
 
             match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
-
             if len(match_char_list) > 0:
                 break
-            else:
-                pass
 
         if match_char_list:
             self.log.debug(
@@ -163,10 +135,7 @@ class WordSearchController(object):
         )
 
         row_len = len(self.__grid)
-        if row_len > 0:
-            col_len = len(self.__grid[0])
-        else:
-            col_len = 0
+        col_len = len(self.__grid[0])
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method,
@@ -179,23 +148,12 @@ class WordSearchController(object):
             for row_pos in range(0, row_len):
                 c = col_pos
                 r = row_pos
-                if r in range(0, row_len) and c in range(0, col_len):
-                    coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
-                    char_list.append(coordinate)
-                else:
-                    coordinate = CharCoordinateModel("#", row=r, col=c)
-                    self.log.warning(
-                        logger_helper.format_log(classname=self.classname, method=method,
-                                                 msg=f"{str(coordinate)} is out of bounds. Breaking out.")
-                    )
-                    break
+                coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                char_list.append(coordinate)
 
             match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
-
             if len(match_char_list) > 0:
                 break
-            else:
-                pass
 
         if match_char_list:
             self.log.debug(
@@ -245,10 +203,7 @@ class WordSearchController(object):
                                      msg=f"Starting DIAG ASC Search {str(word_as_chars)}")
         )
         row_len = len(self.__grid)
-        if (row_len > 0):
-            col_len = len(self.__grid[0])
-        else:
-            col_len = 0
+        col_len = len(self.__grid[0])
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method,
@@ -260,21 +215,12 @@ class WordSearchController(object):
             for row_pos in range(0, (row_len - col_pos)):
                 r = row_pos
                 c = col_pos + r
-                if r in range(0, row_len) and c in range(0, col_len):
-                    coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
-                    char_list.append(coordinate)
-                else:
-                    coordinate = CharCoordinateModel("#", row=r, col=c)
-                    self.log.warning(
-                        logger_helper.format_log(classname=self.classname, method=method,
-                                                 msg=f"{str(coordinate)} is out of bounds. Breaking out.")
-                    )
-                    break
+                coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                char_list.append(coordinate)
+
             match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
             if len(match_char_list) > 0:
                 break
-            else:
-                pass
 
         if len(match_char_list) < 1:
             for row_pos in range(1, row_len):
@@ -283,21 +229,12 @@ class WordSearchController(object):
                 for col_pos in range(0, (col_len - row_pos)):
                     c = col_pos
                     r = row_pos + c
-                    if r in range(0, row_len) and c in range(0, col_len):
-                        coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
-                        char_list.append(coordinate)
-                    else:
-                        coordinate = CharCoordinateModel("#", row=r, col=c)
-                        self.log.warning(
-                            logger_helper.format_log(classname=self.classname, method=method,
-                                                     msg=f"{str(coordinate)} is out of bounds. Breaking out.")
-                        )
-                        break
+                    coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                    char_list.append(coordinate)
+
                 match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
                 if len(match_char_list) > 0:
                     break
-                else:
-                    pass
 
         if match_char_list:
             self.log.debug(
@@ -347,10 +284,7 @@ class WordSearchController(object):
                                      msg=f"Starting DIAG DESC Search {str(word_as_chars)}")
         )
         row_len = len(self.__grid)
-        if (row_len > 0):
-            col_len = len(self.__grid[0])
-        else:
-            col_len = 0
+        col_len = len(self.__grid[0])
 
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method,
@@ -363,21 +297,12 @@ class WordSearchController(object):
                 r = (row_len - 1) - row_pos
                 c = col_pos + row_pos
 
-                if r in range(0, row_len) and c in range(0, col_len):
-                    coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
-                    char_list.append(coordinate)
-                else:
-                    coordinate = CharCoordinateModel("#", row=r, col=c)
-                    self.log.warning(
-                        logger_helper.format_log(classname=self.classname, method=method,
-                                                 msg=f"{str(coordinate)} is out of bounds. Breaking out.")
-                    )
-                    break
+                coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                char_list.append(coordinate)
+
             match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
             if len(match_char_list) > 0:
                 break
-            else:
-                pass
 
         if len(match_char_list) < 1:
             for row_pos in range(1, row_len):
@@ -386,21 +311,12 @@ class WordSearchController(object):
                 for col_pos in range(0, (col_len - row_pos)):
                     c = col_pos
                     r = (row_len - 1) - col_pos - row_pos
-                    if r in range(0, row_len) and c in range(0, col_len):
-                        coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
-                        char_list.append(coordinate)
-                    else:
-                        coordinate = CharCoordinateModel("#", row=r, col=c)
-                        self.log.warning(
-                            logger_helper.format_log(classname=self.classname, method=method,
-                                                     msg=f"{str(coordinate)} is out of bounds. Breaking out.")
-                        )
-                        break
+                    coordinate = CharCoordinateModel(c=self.__grid[r][c], row=r, col=c)
+                    char_list.append(coordinate)
+
                 match_char_list = self.__find_in_char_list(word_as_chars=word_as_chars, char_list_from_grid=char_list)
                 if len(match_char_list) > 0:
                     break
-                else:
-                    pass
 
         if match_char_list:
             self.log.debug(
@@ -467,8 +383,6 @@ class WordSearchController(object):
 
                 if found_count == len(word_as_chars):
                     break
-                else:
-                    pass
         else:
             self.log.warning(
                 logger_helper.format_log(classname=self.classname, method=method,
