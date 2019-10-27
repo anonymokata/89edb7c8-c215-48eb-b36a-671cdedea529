@@ -49,13 +49,7 @@ class WordSearchRepository(object):
 
     def __check_csv_length(self):
         method = "__check_csv_length"
-        if self.__csv_data is None:
-            msg = f"raising FileFormatException {self.__csv_file} was unable to be read"
-            self.log.error(
-                logger_helper.format_log(classname=self.classname, method=method, msg=msg)
-            )
-            raise FileFormatException(msg)
-        elif len(self.__csv_data) == 0:
+        if len(self.__csv_data) == 0:
             msg = f"raising FileFormatException {self.__csv_file} is zero length"
             self.log.error(
                 logger_helper.format_log(classname=self.classname, method=method, msg=msg)
