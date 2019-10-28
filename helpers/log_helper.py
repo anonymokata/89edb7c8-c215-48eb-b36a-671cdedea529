@@ -19,12 +19,12 @@ def get_logger(filename=None):
         create_logger_directory(directory)
         log_fh = open(filename, "w", encoding=config.FILE_ENCODING)
         logging.basicConfig(
-            level=logging.DEBUG,
+            level=config.LOG_LEVEL,
             format=config.FORMAT)
 
         formatter = logging.Formatter(config.FORMAT)
         _log_stream_handler = logging.StreamHandler(log_fh)
-        _log_stream_handler.setLevel(logging.DEBUG)
+        _log_stream_handler.setLevel(config.LOG_LEVEL)
         _log_stream_handler.setFormatter(formatter)
 
         log = logging.getLogger("MAIN")

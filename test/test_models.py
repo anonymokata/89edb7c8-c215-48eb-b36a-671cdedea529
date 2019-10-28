@@ -48,8 +48,8 @@ class TestModels(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
         c = CharCoordinateModel(c="X", row="5", col="6")
-        self.assertEquals(c.get_col(), c.get_x(), msg=f"col={c.get_col()} does not equal x={c.get_x()}")
-        self.assertEquals(c.get_row(), c.get_y(), msg=f"row={c.get_row()} does not equal y={c.get_y()}")
+        self.assertEqual(c.get_col(), c.get_x(), msg=f"col={c.get_col()} does not equal x={c.get_x()}")
+        self.assertEqual(c.get_row(), c.get_y(), msg=f"row={c.get_row()} does not equal y={c.get_y()}")
         self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
@@ -61,7 +61,7 @@ class TestModels(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
         c = CharCoordinateModel(c="X", row="5", col="6")
-        self.assertEquals(c.get_c(), "X", msg=f"c={c.get_c()} does not equal 'X'")
+        self.assertEqual(c.get_c(), "X", msg=f"c={c.get_c()} does not equal 'X'")
         self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
