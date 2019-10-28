@@ -29,8 +29,8 @@ class TestHelpers(unittest.TestCase):
         )
         return
 
-    def test300_when_raw_word_search_rows_is_none_lists_are_empty(self):
-        method = "test200_when_raw_word_search_rows_is_none_lists_are_empty"
+    def test300_when_log_directory_is_missing_log_directory_is_created(self):
+        method = "test300_when_log_directory_is_missing_log_directory_is_created"
         self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
