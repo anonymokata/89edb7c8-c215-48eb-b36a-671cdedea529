@@ -16,9 +16,7 @@ def get_logger(filename=None):
         pass
     else:
         directory = os.path.dirname(filename)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-
+        create_logger_directory(directory)
         log_fh = open(filename, "w", encoding=config.FILE_ENCODING)
         logging.basicConfig(
             level=logging.DEBUG,
@@ -33,6 +31,12 @@ def get_logger(filename=None):
         log.addHandler(_log_stream_handler)
         _LOGGER = log
     return _LOGGER
+
+
+def create_logger_directory(directory=None):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    return
 
 #
 # end of script
