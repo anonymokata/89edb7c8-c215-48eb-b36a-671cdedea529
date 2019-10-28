@@ -16,7 +16,7 @@ LOG_DIR = "logs"
 LOG_FILE = os.path.join(LOG_DIR, "word_search_kata.log")
 TEST_LOG_FILE = os.path.join(LOG_DIR, "test_word_search_kata.log")
 FILE_ENCODING = "utf-8"
-LOG_LEVEL = logging.INFO
+LOG_LEVEL = logging.DEBUG
 
 #
 # word search constants

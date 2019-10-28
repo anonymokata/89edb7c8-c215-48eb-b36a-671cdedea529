@@ -10,7 +10,8 @@ def format_log(classname='UNKNOWN', method='UNKNOWN', msg=''):
     return f"[{classname}:{method}] {msg}"
 
 
-def get_logger(filename=None):
+def get_logger(filename=None, log_to_console=True):
+    method = "get_logger"
     global _LOGGER
     if _LOGGER:
         pass
@@ -18,6 +19,7 @@ def get_logger(filename=None):
         directory = os.path.dirname(filename)
         create_logger_directory(directory)
         log_fh = open(filename, "w", encoding=config.FILE_ENCODING)
+
         logging.basicConfig(
             level=config.LOG_LEVEL,
             format=config.FORMAT)
@@ -29,7 +31,18 @@ def get_logger(filename=None):
 
         log = logging.getLogger("MAIN")
         log.addHandler(_log_stream_handler)
+
+        if log_to_console is False:
+            log.propagate = False
+
         _LOGGER = log
+
+        msg = format_log(
+            "<log_helper>",
+            method=method,
+            msg=f"Initialized new Logger {filename} Console={log_to_console}"
+        )
+        _LOGGER.info(msg)
     return _LOGGER
 
 
