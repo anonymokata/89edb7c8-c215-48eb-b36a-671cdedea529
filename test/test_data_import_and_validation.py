@@ -34,14 +34,14 @@ class TestDataImportAndValidation(unittest.TestCase):
     def setUp(self):
         method = "setUp"
         msg = f"SetUp for {config.CONST_APP_NAME} {config.CONST_APP_VERSION}"
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg=msg)
         )
         return
 
     def tearDown(self):
         method = "tearDown"
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="TearDown Completed")
         )
         return
@@ -49,7 +49,7 @@ class TestDataImportAndValidation(unittest.TestCase):
     def test005_when_missing_csv_is_opened_error_is_raised(self):
         method = 'test20_when_missing_csv_is_opened_error_is_raised'
         csv_file = CSV_MISSING
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
@@ -63,7 +63,7 @@ class TestDataImportAndValidation(unittest.TestCase):
         with self.assertRaises(FileNotFoundError, msg=f"FileNotFoundError should have been triggered"):
             _ = WordSearchRepository(csv_file=csv_file)
 
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
@@ -72,7 +72,7 @@ class TestDataImportAndValidation(unittest.TestCase):
         method = 'test10_when_empty_csv_is_read_error_is_raised'
         csv_file = CSV_EMPTY
 
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
@@ -86,7 +86,7 @@ class TestDataImportAndValidation(unittest.TestCase):
         with self.assertRaises(FileFormatException, msg=f"FileFormatException should have been triggered"):
             _ = WordSearchRepository(csv_file=csv_file)
 
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
@@ -94,7 +94,7 @@ class TestDataImportAndValidation(unittest.TestCase):
     def test020_when_good_csv_is_read_a_word_list_is_found(self):
         method = 'test020_when_good_csv_is_read_a_word_list_is_found'
         csv_file = CSV_ABC_GOOD_GRID_GOOD_WORDS
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
@@ -109,7 +109,7 @@ class TestDataImportAndValidation(unittest.TestCase):
                 logger_helper.format_log(classname=self.classname, method=method, msg=f"Word {w}")
             )
 
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
@@ -117,7 +117,7 @@ class TestDataImportAndValidation(unittest.TestCase):
     def test025_when_word_list_is_short_error_is_raised(self):
         method = 'test025_when_word_list_is_short_error_is_raised'
         csv_file = CSV_ABC_GOOD_GRID_BAD_WORDS
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
@@ -131,7 +131,7 @@ class TestDataImportAndValidation(unittest.TestCase):
         with self.assertRaises(WordLengthException, msg=f"WordLengthException should have been triggered"):
             _ = WordSearchRepository(csv_file=csv_file)
 
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
@@ -139,7 +139,7 @@ class TestDataImportAndValidation(unittest.TestCase):
     def test030_when_good_csv_is_read_a_grid_is_found(self):
         method = 'test030_when_good_csv_is_read_a_grid_is_found'
         csv_file = CSV_ABC_GOOD_GRID_GOOD_WORDS
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
@@ -153,7 +153,7 @@ class TestDataImportAndValidation(unittest.TestCase):
                 logger_helper.format_log(classname=self.classname, method=method, msg=f"Row {r}")
             )
 
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
@@ -161,7 +161,7 @@ class TestDataImportAndValidation(unittest.TestCase):
     def test035_when_grid_is_missing_error_is_raised(self):
         method = 'test025_when_grid_is_missing_error_is_raised'
         csv_file = CSV_ABC_MISSING_GRID_GOOD_WORDS
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
@@ -175,7 +175,7 @@ class TestDataImportAndValidation(unittest.TestCase):
         with self.assertRaises(GridDimensionException, msg=f"GridDimensionException should have been triggered"):
             _ = WordSearchRepository(csv_file=csv_file)
 
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
@@ -183,7 +183,7 @@ class TestDataImportAndValidation(unittest.TestCase):
     def test037_when_grid_is_not_square_error_is_raised(self):
         method = 'test037_when_grid_is_not_square_error_is_raised'
         csv_file = CSV_ABC_BAD_GRID_GOOD_WORDS
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
         )
 
@@ -197,7 +197,7 @@ class TestDataImportAndValidation(unittest.TestCase):
         with self.assertRaises(GridDimensionException, msg=f"GridDimensionException should have been triggered"):
             _ = WordSearchRepository(csv_file=csv_file)
 
-        self.log.debug(
+        self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
