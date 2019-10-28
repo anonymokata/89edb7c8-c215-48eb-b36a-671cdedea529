@@ -164,8 +164,8 @@ class TestGridWordSearch(unittest.TestCase):
         )
         return
 
-    def test150_when_words_are_notfound(self):
-        method = 'test150_when_words_are_notfound_'
+    def test150_when_words_are_notfound_error_is_not_raised(self):
+        method = 'test150_when_words_are_notfound_error_is_not_raised'
         csv_file = CSV_ABC_GRID_NOTFOUND_WORDS
         self.log.debug(
             logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
