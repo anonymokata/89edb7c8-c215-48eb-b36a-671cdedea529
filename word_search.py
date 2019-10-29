@@ -35,6 +35,7 @@ class WordSearch(object):
         for w in word_list:
             result = self.__word_search_controller.find_word(word_as_chars=w)
             word_str = ''.join(w)
+
             self.log.debug(
                 logger_helper.format_log(classname=self.classname, method=method,
                                          msg=f"Adding {str(w)} as {word_str}")
@@ -62,7 +63,6 @@ class WordSearch(object):
             if len(result) > 0:
                 for coord_char in result:
                     xy_coords += f"({coord_char.get_x()},{coord_char.get_y()})"
-
             self.log.debug(
                 logger_helper.format_log(classname=self.classname, method=method,
                                          msg=f"Found {word_str} {xy_coords}")
