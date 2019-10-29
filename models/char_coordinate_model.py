@@ -13,6 +13,12 @@ class CharCoordinateModel(object):
     def get_col(self):
         return self.__col
 
+    def get_y(self):
+        return self.get_row()
+
+    def get_x(self):
+        return self.get_col()
+
     def __str__(self):
         return "(%d,%d) %s" % (self.get_row(), self.get_col(), self.get_c())
 
