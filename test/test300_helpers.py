@@ -7,10 +7,10 @@ import etc.config as config
 __author__ = 'Ken Langer'
 
 
-class TestHelpers(unittest.TestCase):
+class Test300Helpers(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-        super(TestHelpers, self).__init__(*args, **kwargs)
-        self.classname = "TestHelpers"
+        super(Test300Helpers, self).__init__(*args, **kwargs)
+        self.classname = "Test300Helpers"
         self.log = logger_helper.get_logger(config.TEST_LOG_FILE)
         return
 
@@ -50,6 +50,41 @@ class TestHelpers(unittest.TestCase):
         )
         os.rmdir(directory)
         self.assertFalse(os.path.exists(directory), msg=f"{directory} could not be removed")
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test310_when_log_to_console_is_False_propagate_is_False(self):
+        method = "test310_when_log_to_console_is_False_propagate_is_False"
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+        old_propagate = self.log.propagate
+        logger_helper.set_log_propagation(log=self.log, log_to_console=False)
+        self.assertFalse(self.log.propagate, msg=f"self.log.propagate expected to be False preventing console logging")
+
+        # Setting propagate back to original value
+        logger_helper.set_log_propagation(log=self.log, log_to_console=old_propagate)
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test320_when_log_to_console_is_True_propagate_is_True(self):
+        method = "test320_when_log_to_console_is_True_propagate_is_True"
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        old_propagate = self.log.propagate
+        logger_helper.set_log_propagation(log=self.log, log_to_console=True)
+        self.assertTrue(self.log.propagate, msg=f"self.log.propagate expected to be True which allows console logging")
+
+        # Setting propagate back to original value
+        logger_helper.set_log_propagation(log=self.log, log_to_console=old_propagate)
 
         self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")

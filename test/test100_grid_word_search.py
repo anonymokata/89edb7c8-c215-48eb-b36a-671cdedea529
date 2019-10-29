@@ -28,10 +28,10 @@ CSV_ABC_GRID_DIAG_DESC_REVERSE_WORDS = 'data/test/abc_good_grid_diag_desc_revers
 CSV_ABC_GRID_NOTFOUND_WORDS = 'data/test/abc_good_grid_notfound_words.csv'
 
 
-class TestGridWordSearch(unittest.TestCase):
+class Test100GridWordSearch(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-        super(TestGridWordSearch, self).__init__(*args, **kwargs)
-        self.classname = "TestGridWordSearch"
+        super(Test100GridWordSearch, self).__init__(*args, **kwargs)
+        self.classname = "Test100GridWordSearch"
         self.log = logger_helper.get_logger(config.TEST_LOG_FILE)
         return
 

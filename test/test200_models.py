@@ -8,10 +8,10 @@ from models.char_coordinate_model import CharCoordinateModel
 __author__ = 'Ken Langer'
 
 
-class TestModels(unittest.TestCase):
+class Test200Models(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-        super(TestModels, self).__init__(*args, **kwargs)
-        self.classname = "TestModels"
+        super(Test200Models, self).__init__(*args, **kwargs)
+        self.classname = "Test200Models"
         self.log = logger_helper.get_logger(config.TEST_LOG_FILE)
         return
 

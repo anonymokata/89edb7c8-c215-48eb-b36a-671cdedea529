@@ -32,8 +32,7 @@ def get_logger(filename=None, log_to_console=True):
         log = logging.getLogger("MAIN")
         log.addHandler(_log_stream_handler)
 
-        if log_to_console is False:
-            log.propagate = False
+        set_log_propagation(log=log, log_to_console=log_to_console)
 
         _LOGGER = log
 
@@ -44,6 +43,14 @@ def get_logger(filename=None, log_to_console=True):
         )
         _LOGGER.info(msg)
     return _LOGGER
+
+
+def set_log_propagation(log=None, log_to_console=True):
+    if log_to_console is False:
+        log.propagate = False
+    else:
+        log.propagate = True
+    return
 
 
 def create_logger_directory(directory=None):

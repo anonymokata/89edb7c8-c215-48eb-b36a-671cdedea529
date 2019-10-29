@@ -24,10 +24,10 @@ CSV_ABC_BAD_GRID_GOOD_WORDS = 'data/test/abc_bad_grid_good_words.csv'
 CSV_ABC_GOOD_GRID_GOOD_WORDS = 'data/test/abc_good_grid_good_words.csv'
 
 
-class TestDataImportAndValidation(unittest.TestCase):
+class Test000DataImportAndValidation(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-        super(TestDataImportAndValidation, self).__init__(*args, **kwargs)
-        self.classname = "TestDataImportAndValidation"
+        super(Test000DataImportAndValidation, self).__init__(*args, **kwargs)
+        self.classname = "Test000DataImportAndValidation"
         self.log = logger_helper.get_logger(config.TEST_LOG_FILE)
         return
 
