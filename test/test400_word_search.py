@@ -2,6 +2,7 @@ import unittest
 import helpers.log_helper as logger_helper
 import etc.config as config
 from word_search import WordSearch
+from exceptions.file_format_exception import FileFormatException
 
 __author__ = 'Ken Langer'
 
@@ -52,6 +53,25 @@ class Test400WordSearch(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileNotFoundException")
         )
         with self.assertRaises(FileNotFoundError, msg=f"FileNotFoundError should have been triggered"):
+            _ = WordSearch(word_search_csv=csv_file)
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test410_when_word_search_is_created_with_empty_file_error_is_raised(self):
+        method = "test410_when_word_search_is_created_with_empty_file_error_is_raised"
+        csv_file = CSV_EMPTY
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Expecting FileFormatException")
+        )
+        with self.assertRaises(FileFormatException, msg=f"FileFormatException should have been triggered"):
             _ = WordSearch(word_search_csv=csv_file)
 
         self.log.info(
