@@ -99,6 +99,30 @@ class Test400WordSearch(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
+
+    def test430_when_word_search_search_for_words_all_are_found(self):
+        method = "test430_when_word_search_search_for_words_all_are_found"
+        csv_file = CSV_STAR_TREK
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        word_search = WordSearch(word_search_csv=csv_file)
+        result_dict = word_search.get_solution()
+        for w_str in word_search.get_word_list_as_strings():
+            self.assertTrue(w_str in result_dict, msg=f"{w_str} is not in results with {len(result_dict)}")
+
+        for w in result_dict:
+            self.log.info(
+                logger_helper.format_log(classname=self.classname, method=method, msg=f"{w} {result_dict[w]}")
+            )
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
 #
 # end of script
 #
