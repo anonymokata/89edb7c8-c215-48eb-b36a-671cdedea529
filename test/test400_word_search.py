@@ -3,6 +3,7 @@ import helpers.log_helper as logger_helper
 import etc.config as config
 from word_search import WordSearch
 from exceptions.file_format_exception import FileFormatException
+from exceptions.grid_dimension_exception import GridDimensionException
 
 __author__ = 'Ken Langer'
 
@@ -11,6 +12,7 @@ __author__ = 'Ken Langer'
 #
 CSV_EMPTY = 'data/test/empty.csv'
 CSV_MISSING = 'data/test/bogus_missing_file.csv'
+CSV_BAD_GRID = 'data/test/abc_bad_grid_good_words.csv'
 
 #
 # Sample Production Files
@@ -79,6 +81,24 @@ class Test400WordSearch(unittest.TestCase):
         )
         return
 
+    def test420_when_word_search_is_created_with_bad_grid_error_is_raised(self):
+        method = "test420_when_word_search_is_created_with_bad_grid_error_is_raised"
+        csv_file = CSV_BAD_GRID
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Expecting GridDimensionException")
+        )
+        with self.assertRaises(GridDimensionException, msg=f"GridDimensionException should have been triggered"):
+            _ = WordSearch(word_search_csv=csv_file)
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
 #
 # end of script
 #

@@ -13,6 +13,7 @@ class WordSearch(object):
 
         self.__word_search_csv = word_search_csv
         self.__word_search_repository = WordSearchRepository(csv_file=word_search_csv)
+
         return
 
 
