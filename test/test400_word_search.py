@@ -186,6 +186,25 @@ class Test400WordSearch(unittest.TestCase):
         )
         return
 
+    def test465_when_main_is_called_with_two_files_two_is_returned(self):
+        method = "test465_when_main_is_called_with_two_files_two_is_returned"
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        arg_list = list()
+        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(CSV_STAR_TREK)
+        arg_list.append(CSV_FIREFLY)
+
+        self.assertEqual(2, word_search.main(argv=arg_list), "Expected two since two good files were provided")
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
     def test470_when_main_is_called_with_notfound_file_zero_is_returned(self):
         method = "test470_when_main_is_called_with_notfound_file_zero_is_returned"
 
@@ -198,6 +217,24 @@ class Test400WordSearch(unittest.TestCase):
         arg_list.append(CSV_MISSING)
 
         self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since a missing file was provided")
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test480_when_main_is_called_with_empty_file_zero_is_returned(self):
+        method = "test480_when_main_is_called_with_empty_file_zero_is_returned"
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        arg_list = list()
+        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(CSV_EMPTY)
+
+        self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since an empty file was provided")
 
         self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")

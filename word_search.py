@@ -94,6 +94,9 @@ def process_file(word_search_csv=None):
         print(f"ERROR: {str(fnfe)}")
         return False
 
+    except FileFormatException as ffe:
+        print(f"ERROR: {str(ffe)}")
+        return False
 
 def main(argv):
     processed_count = 0
