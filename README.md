@@ -90,13 +90,14 @@ This application was developed using `Python 3.7`.  It is recommended that this 
 
 ## Cloning
 
-This project uses `git` as source control.  To use this project, simply clone the repo into a working directory.  Ensure `master` is the branch checked out.  For linux, macOS, or Window Subsystem for Linux; consider giving execute permissions to `word_search.py`.
+This project uses `git` as source control.  To use this project, simply clone the repo into a working directory.  Ensure `master` is the branch checked out.  For linux, macOS, or Window Subsystem for Linux; consider giving execute permissions to `word_search.py` and `run*.bash` scripts.
 
 ```
 % chmod +x word_seach.py
+% chmod +x run_*.bash
 ```
 
-This way you can run `./word_search.py ....`.
+This way you can run `./word_search.py ....`.   I will assume this is not done and prefix it with the command interpreter to use.  
 
 ## Virtual Environments
 
@@ -127,14 +128,14 @@ You can use your own word search CSV but there are examples in `data/test` and `
 
 If you look at the link above for the Pillar Technology specifications, there is a reference to sites which can help you generate your own word search 
 
-This has been tested using macOS 10.15 and Windows 10 (17.03).
+This has been tested using `macOS 10.15` and `Windows 10 (17.03)`.  If you have errors, see the `Troubleshooting` section below.
 
 ## Command Line Syntax
 
-IF you run the `word_search.py` with no arguments, you will get a little help page.
+If you run the `word_search.py` with no arguments, you will get a little help page.
 
 ```
-user@MBA word_search_kata % python3 word_search.py
+% python3 word_search.py
 APPLICATION:
     Word Search Kata 19.10.00
 DESCRIPTION:
@@ -147,7 +148,6 @@ USAGE:
      python3 word_search.py word_search_1.csv word_search_2.csv ... word_search_N.csv
 EXAMPLE:
      python3 word_search.py word_search_A.csv word_search_B.csv
-user@MBA % 
 ```
 
 ## Logging
@@ -159,7 +159,13 @@ Within the project root, there is a `logs` directory where you will find a log f
 To run all tests, run the following command from a terminal (bash, zsh, CMD,..) within the `project root` directory.
 
 ```
-user@MBA word_search_kata % python3 -m unittest discover
+% python3 -m unittest discover
+```
+
+**OR if you have a bash/zsh/sh terminal**
+
+```
+% bash run_all_unittests.bash
 ```
 
 There will be a lot of output to the console.  The logging (DEBUG, INFO, WARN,....) will be written to the log file for easier review.
@@ -179,8 +185,7 @@ In this case, all the tests for the test class `Test100GridWordSearch` will be e
 The following example will process two word search CSV files.  The number of files can be variable with one or many.  This is launched within the `project root` directory.
 
 ```
-user@MBA word_search_kata % python3 word_search.py data/sample/firefly_word_search.csv data/
-sample/star_trek_word_search.csv
+% python3 word_search.py data/sample/firefly_word_search.csv data/sample/star_trek_word_search.csv
 ```
 
 The output will provide the file processed and the puzzle solution in the form of coordinates where each letter of the word was found.
@@ -207,10 +212,21 @@ SCOTTY: (0,5),(1,5),(2,5),(3,5),(4,5),(5,5)
 SPOCK: (2,1),(3,2),(4,3),(5,4),(6,5)
 SULU: (3,3),(2,2),(1,1),(0,0)
 UHURA: (4,0),(3,1),(2,2),(1,3),(0,4)
-user@MBA word_search_kata % 
 ```
 
+If you want to run `word_search.py` against ALL CSV files in the `data/` directory, you can run the following.
+
+```
+% bash run_word_search_on_all_csv_data.bash
+```
+
+Expect errors and warnings since this will process properly and improperly formatted word search data files.
+
 # Troubleshooting / FAQ
+
+### I tried to execute the `run_*.bash` scripts on a Windows system and I am getting an odd error.
+
+It is likely that the end-of-line characters are set to DOS when the code was cloned/pulled by your local GIT client vs preserving what is on the server's repo.  To fix this, just follow [this gist](https://gist.github.com/uuklanger/4d1e439986df889554467159c154ff9d) which shows how to fix the files using `tr`.
 
 ### Tests will not run
 
