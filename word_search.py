@@ -67,7 +67,8 @@ class WordSearch(object):
             xy_coords = ''
             if len(result) > 0:
                 for coord_char in result:
-                    xy_coords += f"({coord_char.get_x()},{coord_char.get_y()})"
+                    xy_coords += f"({coord_char.get_x()},{coord_char.get_y()}),"
+                xy_coords = xy_coords.strip(",")
             self.log.debug(
                 logger_helper.format_log(classname=self.classname, method=method,
                                          msg=f"Found {word_str} {xy_coords}")
@@ -87,7 +88,7 @@ def process_file(word_search_csv=None):
         ws = WordSearch(word_search_csv=word_search_csv)
         result_dict = ws.get_solution()
         for w in result_dict:
-            print(f"{w} {result_dict[w]}")
+            print(f"{w}: {result_dict[w]}")
         return True
 
     except FileNotFoundError as fnfe:
