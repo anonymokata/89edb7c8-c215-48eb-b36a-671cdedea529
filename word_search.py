@@ -6,6 +6,7 @@ import helpers.log_helper as logger_helper
 import etc.config as config
 from repositories.word_search_repository import WordSearchRepository
 from controllers.word_search_controller import WordSearchController
+from exceptions.file_format_exception import FileFormatException
 
 __author__ = 'Ken Langer'
 
@@ -87,19 +88,23 @@ def process_file(word_search_csv=None):
         result_dict = ws.get_solution()
         for w in result_dict:
             print(f"{w} {result_dict[w]}")
+        return True
 
     except FileNotFoundError as fnfe:
-        print(f"ERROR: {word_search_csv} does not exist")
+        print(f"ERROR: {str(fnfe)}")
+        return False
 
 
 def main(argv):
+    processed_count = 0
     if len(argv) > 1:
         print(f"{config.CONST_APP_NAME} {config.CONST_APP_VERSION}")
 
         for arg_num in range(1, len(argv)):
             print(" ")
-            process_file(word_search_csv=argv[arg_num])
-        return True
+            if process_file(word_search_csv=argv[arg_num]):
+                processed_count += 1
+        return processed_count
     else:
         app_name = os.path.basename(argv[0])
         print(f"APPLICATION:")
@@ -114,12 +119,12 @@ def main(argv):
         print(f"     python3 {app_name} word_search_1.csv word_search_2.csv ... word_search_N.csv")
         print(f"EXAMPLE:")
         print(f"     python3 {app_name} word_search_A.csv word_search_B.csv")
-        return False
+        return processed_count
 
 
 if __name__ == '__main__':
     main(sys.argv[1:])
-    
+
 #
 # end of script
 #
