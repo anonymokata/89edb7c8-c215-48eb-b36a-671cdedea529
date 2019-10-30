@@ -1,6 +1,8 @@
 import unittest
+import os
 import helpers.log_helper as logger_helper
 import etc.config as config
+import word_search
 from word_search import WordSearch
 from exceptions.file_format_exception import FileFormatException
 from exceptions.grid_dimension_exception import GridDimensionException
@@ -148,6 +150,24 @@ class Test400WordSearch(unittest.TestCase):
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
         )
         return
+
+    def test450_when_main_is_called_with_no_file_false_is_returned(self):
+        method = "test450_when_main_is_called_with_no_file_false_is_returned"
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        arg_list = list()
+        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+
+        self.assertFalse(word_search.main(argv=arg_list), "Expected False since no file was provided")
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
 #
 # end of script
 #

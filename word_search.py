@@ -1,7 +1,11 @@
-from repositories.word_search_repository import WordSearchRepository
-from controllers.word_search_controller import WordSearchController
+#/usr/bin/env python3
+
+import os
+import sys
 import helpers.log_helper as logger_helper
 import etc.config as config
+from repositories.word_search_repository import WordSearchRepository
+from controllers.word_search_controller import WordSearchController
 
 __author__ = 'Ken Langer'
 
@@ -76,9 +80,45 @@ class WordSearch(object):
         return results_dict
 
 
+def process_file(word_search_csv=None):
+    try:
+        print(f"Processing Word Search: {word_search_csv}")
+        ws = WordSearch(word_search_csv=word_search_csv)
+        result_dict = ws.get_solution()
+        for w in result_dict:
+            print(f"{w} {result_dict[w]}")
+
+    except FileNotFoundError as fnfe:
+        print(f"ERROR: {word_search_csv} does not exist")
+
+
+def main(argv):
+    if len(argv) > 1:
+        print(f"{config.CONST_APP_NAME} {config.CONST_APP_VERSION}")
+
+        for arg_num in range(1, len(argv)):
+            print(" ")
+            process_file(word_search_csv=argv[arg_num])
+        return True
+    else:
+        app_name = os.path.basename(argv[0])
+        print(f"APPLICATION:")
+        print(f"    {config.CONST_APP_NAME} {config.CONST_APP_VERSION}")
+        print(f"DESCRIPTION:")
+        print(f"    {config.CONST_APP_NAME} is an implementation example based on specification provided by")
+        print(f"    Pillar Technology.  The goal is to programmatically solve a word search puzzle.")
+        print(f"MORE INFORMATION:")
+        print(f"    https://github.com/PillarTechnology/kata-word-search/blob/master/README.md")
+        print("USAGE:")
+        print(f"     Provide one or many word search formatted CSV files")
+        print(f"     python3 {app_name} word_search_1.csv word_search_2.csv ... word_search_N.csv")
+        print(f"EXAMPLE:")
+        print(f"     python3 {app_name} word_search_A.csv word_search_B.csv")
+        return False
+
+
 if __name__ == '__main__':
-    w = WordSearch("data/sample/firefly_word_search.csv")
-    #w = WordSearch("data/sample/star_trek_word_search.csv")
+    main(sys.argv[1:])
 
 #
 # end of script
