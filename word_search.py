@@ -1,7 +1,13 @@
-from repositories.word_search_repository import WordSearchRepository
-from controllers.word_search_controller import WordSearchController
+#!/usr/bin/env python3
+
+import os
+import sys
 import helpers.log_helper as logger_helper
 import etc.config as config
+from repositories.word_search_repository import WordSearchRepository
+from controllers.word_search_controller import WordSearchController
+from exceptions.file_format_exception import FileFormatException
+from exceptions.grid_dimension_exception import GridDimensionException
 
 __author__ = 'Ken Langer'
 
@@ -33,7 +39,6 @@ class WordSearch(object):
         word_list_as_strings = list()
         word_list = self.__word_search_repository.get_word_search().get_word_list()
         for w in word_list:
-            result = self.__word_search_controller.find_word(word_as_chars=w)
             word_str = ''.join(w)
 
             self.log.debug(
@@ -62,7 +67,8 @@ class WordSearch(object):
             xy_coords = ''
             if len(result) > 0:
                 for coord_char in result:
-                    xy_coords += f"({coord_char.get_x()},{coord_char.get_y()})"
+                    xy_coords += f"({coord_char.get_x()},{coord_char.get_y()}),"
+                xy_coords = xy_coords.strip(",")
             self.log.debug(
                 logger_helper.format_log(classname=self.classname, method=method,
                                          msg=f"Found {word_str} {xy_coords}")
@@ -76,9 +82,57 @@ class WordSearch(object):
         return results_dict
 
 
+def process_file(word_search_csv=None):
+    try:
+        print(f"Processing Word Search: {word_search_csv}")
+        ws = WordSearch(word_search_csv=word_search_csv)
+        result_dict = ws.get_solution()
+        for w in result_dict:
+            print(f"{w}: {result_dict[w]}")
+        return True
+
+    except FileNotFoundError as fnfe:
+        print(f"ERROR: {str(fnfe)}")
+        return False
+
+    except FileFormatException as ffe:
+        print(f"ERROR: {str(ffe)}")
+        return False
+
+    except GridDimensionException as gde:
+        print(f"ERROR: {str(gde)}")
+        return False
+
+
+def main(argv):
+    processed_count = 0
+    if len(argv) > 1:
+        print(f"{config.CONST_APP_NAME} {config.CONST_APP_VERSION}")
+
+        for arg_num in range(1, len(argv)):
+            print(" ")
+            if process_file(word_search_csv=argv[arg_num]):
+                processed_count += 1
+        return processed_count
+    else:
+        app_name = os.path.basename(argv[0])
+        print(f"APPLICATION:")
+        print(f"    {config.CONST_APP_NAME} {config.CONST_APP_VERSION}")
+        print(f"DESCRIPTION:")
+        print(f"    {config.CONST_APP_NAME} is an implementation example based on specification provided by")
+        print(f"    Pillar Technology.  The goal is to programmatically solve a word search puzzle.")
+        print(f"MORE INFORMATION:")
+        print(f"    https://github.com/PillarTechnology/kata-word-search/blob/master/README.md")
+        print("USAGE:")
+        print(f"     Provide one or many word search formatted CSV files")
+        print(f"     python3 {app_name} word_search_1.csv word_search_2.csv ... word_search_N.csv")
+        print(f"EXAMPLE:")
+        print(f"     python3 {app_name} word_search_A.csv word_search_B.csv")
+        return processed_count
+
+
 if __name__ == '__main__':
-    w = WordSearch("data/sample/firefly_word_search.csv")
-    #w = WordSearch("data/sample/star_trek_word_search.csv")
+    main(sys.argv)
 
 #
 # end of script
