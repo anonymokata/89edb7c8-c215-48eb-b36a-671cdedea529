@@ -15,6 +15,7 @@ __author__ = 'Ken Langer'
 CSV_EMPTY = 'data/test/empty.csv'
 CSV_MISSING = 'data/test/bogus_missing_file.csv'
 CSV_BAD_GRID = 'data/test/abc_bad_grid_good_words.csv'
+CSV_BAD_WORDS = 'data/test/abc_good_grid_bad_words.csv'
 CSV_NOTFOUND_WORDS = 'data/test/abc_good_grid_notfound_words.csv'
 
 #
@@ -253,6 +254,24 @@ class Test400WordSearch(unittest.TestCase):
         arg_list.append(CSV_BAD_GRID)
 
         self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since a file was provided that has a bad grid")
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
+    def test495_when_main_is_called_with_bad_words_file_zero_is_returned(self):
+        method = "test495_when_main_is_called_with_bad_words_file_zero_is_returned"
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        arg_list = list()
+        arg_list.append(os.path.join(os.curdir, "dummy.py"))
+        arg_list.append(CSV_BAD_WORDS)
+
+        self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since a file was provided that has a bad words")
 
         self.log.info(
             logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
