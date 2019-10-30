@@ -159,7 +159,7 @@ class Test400WordSearch(unittest.TestCase):
         )
 
         arg_list = list()
-        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(os.path.join(os.curdir, "dummy.py"))
 
         self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since no file was provided")
 
@@ -176,7 +176,7 @@ class Test400WordSearch(unittest.TestCase):
         )
 
         arg_list = list()
-        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(os.path.join(os.curdir, "dummy.py"))
         arg_list.append(CSV_STAR_TREK)
 
         self.assertEqual(1, word_search.main(argv=arg_list), "Expected one since a good file was provided")
@@ -194,7 +194,7 @@ class Test400WordSearch(unittest.TestCase):
         )
 
         arg_list = list()
-        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(os.path.join(os.curdir, "dummy.py"))
         arg_list.append(CSV_STAR_TREK)
         arg_list.append(CSV_FIREFLY)
 
@@ -213,7 +213,7 @@ class Test400WordSearch(unittest.TestCase):
         )
 
         arg_list = list()
-        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(os.path.join(os.curdir, "dummy.py"))
         arg_list.append(CSV_MISSING)
 
         self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since a missing file was provided")
@@ -231,7 +231,7 @@ class Test400WordSearch(unittest.TestCase):
         )
 
         arg_list = list()
-        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(os.path.join(os.curdir, "dummy.py"))
         arg_list.append(CSV_EMPTY)
 
         self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since an empty file was provided")
@@ -249,7 +249,7 @@ class Test400WordSearch(unittest.TestCase):
         )
 
         arg_list = list()
-        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(os.path.join(os.curdir, "dummy.py"))
         arg_list.append(CSV_BAD_GRID)
 
         self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since a file was provided that has a bad grid")
