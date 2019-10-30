@@ -7,6 +7,7 @@ import etc.config as config
 from repositories.word_search_repository import WordSearchRepository
 from controllers.word_search_controller import WordSearchController
 from exceptions.file_format_exception import FileFormatException
+from exceptions.grid_dimension_exception import GridDimensionException
 
 __author__ = 'Ken Langer'
 
@@ -38,7 +39,6 @@ class WordSearch(object):
         word_list_as_strings = list()
         word_list = self.__word_search_repository.get_word_search().get_word_list()
         for w in word_list:
-            result = self.__word_search_controller.find_word(word_as_chars=w)
             word_str = ''.join(w)
 
             self.log.debug(
@@ -97,6 +97,11 @@ def process_file(word_search_csv=None):
     except FileFormatException as ffe:
         print(f"ERROR: {str(ffe)}")
         return False
+
+    except GridDimensionException as gde:
+        print(f"ERROR: {str(gde)}")
+        return False
+
 
 def main(argv):
     processed_count = 0

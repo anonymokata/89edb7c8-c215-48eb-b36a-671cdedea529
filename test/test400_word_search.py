@@ -241,6 +241,24 @@ class Test400WordSearch(unittest.TestCase):
         )
         return
 
+    def test490_when_main_is_called_with_bad_grid_file_zero_is_returned(self):
+        method = "test490_when_main_is_called_with_bad_grid_file_zero_is_returned"
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        arg_list = list()
+        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(CSV_BAD_GRID)
+
+        self.assertEqual(0, word_search.main(argv=arg_list), "Expected zero since a file was provided that has a bad grid")
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
+
 #
 # end of script
 #
