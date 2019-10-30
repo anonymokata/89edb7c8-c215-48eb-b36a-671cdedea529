@@ -168,6 +168,23 @@ class Test400WordSearch(unittest.TestCase):
         )
         return
 
+    def test460_when_main_is_called_with_one_file_true_is_returned(self):
+        method = "test460_when_main_is_called_with_one_file_true_is_returned"
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Started ------------------")
+        )
+
+        arg_list = list()
+        arg_list.append(os.path.join(os.curdir, "dummy,py"))
+        arg_list.append(CSV_STAR_TREK)
+
+        self.assertTrue(word_search.main(argv=arg_list), "Expected True since one file was provided")
+
+        self.log.info(
+            logger_helper.format_log(classname=self.classname, method=method, msg="Completed ----------------")
+        )
+        return
 #
 # end of script
 #
