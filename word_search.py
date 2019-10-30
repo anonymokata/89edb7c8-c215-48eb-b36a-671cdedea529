@@ -8,6 +8,7 @@ from repositories.word_search_repository import WordSearchRepository
 from controllers.word_search_controller import WordSearchController
 from exceptions.file_format_exception import FileFormatException
 from exceptions.grid_dimension_exception import GridDimensionException
+from exceptions.word_length_exception import WordLengthException
 
 __author__ = 'Ken Langer'
 
@@ -68,7 +69,9 @@ class WordSearch(object):
             if len(result) > 0:
                 for coord_char in result:
                     xy_coords += f"({coord_char.get_x()},{coord_char.get_y()}),"
+
                 xy_coords = xy_coords.strip(",")
+
             self.log.debug(
                 logger_helper.format_log(classname=self.classname, method=method,
                                          msg=f"Found {word_str} {xy_coords}")
@@ -101,6 +104,10 @@ def process_file(word_search_csv=None):
 
     except GridDimensionException as gde:
         print(f"ERROR: {str(gde)}")
+        return False
+
+    except WordLengthException as wle:
+        print(f"ERROR: {str(wle)}")
         return False
 
 
