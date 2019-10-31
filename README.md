@@ -234,7 +234,7 @@ Ensure that you are in the `project root` and not within a sub directory of the 
 
 ### I am seeing string formatting errors
 
-Be sure you are using `Python3.7` or newer.  Older versions of python do not support format strings `f"{my_variable} is a great variable}"`.  Check your python version.
+Be sure you are using `Python3.7` or newer.  Older versions of python do not support format strings `f"{my_variable} is a great variable"`.  Check your python version.
 
 ### I tried one of the `data/test` files an am getting error messages
 
